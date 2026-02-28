@@ -28,12 +28,21 @@ int main() {
 
 
         std::cout << "\nCSR Test " << std::endl;
-        CSRMatrix cm(2, 3);
-        cm.set(0, 0, 1.0);
-        cm.set(1, 2, 2.0);
+        CSRMatrix cm(3, 3);
+    
+    
+    	cm.add_element(0, 0, 5.0);
+    	cm.add_element(0, 2, 3.0);
+    	cm.add_element(1, 1, 8.0);
+    	cm.add_element(2, 0, 2.0);
+    	cm.add_element(2, 2, 7.0);
+    
+  
+    	cm.finalize();
+    
 
         Vector v_res2 = cm * v1;
-        std::cout << "CSR * Vector: (expect [1, 6]) " << v_res2[0] << " " << v_res2[1] << std::endl;
+        std::cout << "CSR * Vector: (expect [14, 16,23]) " << v_res2[0] << " " << v_res2[1] << " "<<v_res2[2]<< std::endl;
 
 
     } catch (const std::exception& e) {
