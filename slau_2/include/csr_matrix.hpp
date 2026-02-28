@@ -85,7 +85,7 @@ public:
 
     void set(size_t i, size_t j, double val) {
         if (i >= num_rows || j >= num_cols) {
-            throw std::out_of_range("Index out of range");
+            throw std::out_of_range("out of range");
         }
         temp_data[{i, j}] = val;
         is_built = false;  
@@ -93,7 +93,7 @@ public:
 
     double get(size_t i, size_t j) const {
         if (i >= num_rows || j >= num_cols) {
-            throw std::out_of_range("Index out of range");
+            throw std::out_of_range("out of range");
         }
 
         CSRMatrix* self = const_cast<CSRMatrix*>(this);
