@@ -61,32 +61,29 @@ Vector Jacobi(const CSRMatrix& A, const Vector& b, double epsilon, size_t max_it
     return xcurr;
 }
 
+Vector Simple(const CSRMatrix& A, const Vector& b, const Vector& x0, double tau, double tolerance) {
+    Vector x = x0;
+    Vector res = A * x - b;
 
+    size_t iter = 0;
+    size_t max_iter = 1000;  
 
-Vector SimpleIteration(const CSRMatrix& A, const Vector& b, double tau, double epsilon, size_t max_iter) {
-    size_t n = A.get_rows();
-    Vector x(n);
-
-    for (size_t iter = 0; iter < max_iter; iter++) {
-
-        Vector Ax = A * x;
-        Vector residual = Ax - b;
-
-
-        Vector x_new = x - residual * tau;
-
-
-        double error = (x_new - x).norm();
-        if (error < epsilon) {
-            return x_new;
+    while (res.norm() > tolerance) {
+        if (iter >= max_iter) {
+            std::cerr << "Max iterations!" << std::endl;
+            break;
         }
-
-        x = x_new;
+        x = x - res * tau;
+        res = A * x - b;
+        iter++;
     }
 
-    std::cerr << " did not converge ";
     return x;
 }
+
+
+
+
 
 
 Vector GaussZeidel(const CSRMatrix& A, const Vector& b, double epsilon, size_t max_iter) {
